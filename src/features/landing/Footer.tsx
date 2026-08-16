@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ArrowRight, FileText, Mail, MapPin, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Download, FileText, Mail, MapPin, ShieldCheck } from 'lucide-react'
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa'
 import { ContactModal } from './ContactModal'
 
@@ -37,8 +37,26 @@ export function Footer() {
             </div>
           </FooterItem>
 
-          <FooterItem icon={<ShieldCheck size={25} strokeWidth={1.5} />} title="Avisos de privacidad">
-            <button type="button" className="mt-3 h-0.5 w-12 bg-blue-500" aria-label="Avisos de privacidad, próximamente" />
+          <FooterItem
+            icon={<ShieldCheck size={25} strokeWidth={1.5} />}
+            title={(
+              <a
+                href="/documentos/aviso-de-privacidad-integral.pdf"
+                download="Aviso-de-Privacidad-Integral-SocioManager.pdf"
+                className="rounded-sm transition-colors hover:text-blue-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
+              >
+                Avisos de privacidad
+              </a>
+            )}
+          >
+            <a
+              href="/documentos/aviso-de-privacidad-integral.pdf"
+              download="Aviso-de-Privacidad-Integral-SocioManager.pdf"
+              className="group mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-blue-400 transition-colors hover:text-blue-300 focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-400"
+            >
+              Descargar PDF
+              <Download size={13} className="transition-transform group-hover:translate-y-0.5" aria-hidden="true" />
+            </a>
           </FooterItem>
 
           <FooterItem icon={<FileText size={25} strokeWidth={1.5} />} title="Términos y condiciones">
@@ -56,7 +74,7 @@ export function Footer() {
   )
 }
 
-function FooterItem({ icon, title, children }: { icon?: React.ReactNode; title: string; children: React.ReactNode }) {
+function FooterItem({ icon, title, children }: { icon?: React.ReactNode; title: React.ReactNode; children: React.ReactNode }) {
   return (
     <div className="flex min-h-32 gap-4 px-3 py-7 md:px-6 xl:min-h-36 xl:border-r xl:border-slate-700/70 xl:last:border-r-0">
       {icon && <div className="mt-0.5 shrink-0 text-blue-300">{icon}</div>}
