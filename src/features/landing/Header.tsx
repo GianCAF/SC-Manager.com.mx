@@ -1,30 +1,86 @@
+import { useEffect, useState } from 'react'
+import { User } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const navigation = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Nosotros', href: '#nosotros' },
-  { label: 'Contacto', href: '#contacto' },
+  { id: 'inicio', label: 'Inicio' },
+  { id: 'nosotros', label: 'Nosotros' },
+  { id: 'servicios', label: 'Servicios' },
+  { id: 'contacto', label: 'Contacto' },
 ]
 
+const sectionOrder = ['inicio', 'nosotros', 'servicios', 'contacto']
+
 export function Header() {
+  const [activeSection, setActiveSection] = useState('inicio')
+
+  useEffect(() => {
+    let frameId = 0
+
+    const updateActiveSection = () => {
+      const viewportMarker = window.scrollY + window.innerHeight * 0.34
+      const isAtBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4
+
+      if (isAtBottom) {
+        setActiveSection('contacto')
+        return
+      }
+
+      const currentSection = sectionOrder.reduce((current, sectionId) => {
+        const section = document.getElementById(sectionId)
+        return section && section.offsetTop <= viewportMarker ? sectionId : current
+      }, 'inicio')
+
+      setActiveSection(currentSection)
+    }
+
+    const handleScroll = () => {
+      window.cancelAnimationFrame(frameId)
+      frameId = window.requestAnimationFrame(updateActiveSection)
+    }
+
+    updateActiveSection()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
+
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white px-4 py-2 md:px-8">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
-        <a href="#inicio" aria-label="Ir al inicio" className="flex shrink-0 items-center">
-          <img src="/imagenes/logo1.png" alt="Logo SocioManager" className="h-9 w-auto object-contain" />
+    <header className="site-header sticky top-0 z-50 h-12 px-4 md:px-8">
+      <div className="mx-auto grid h-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4">
+        <a href="#inicio" aria-label="Ir al inicio" className="flex w-fit items-center" onClick={() => setActiveSection('inicio')}>
+          <img src="/imagenes/logo1.png" alt="Logo SocioManager" className="h-8 w-auto object-contain" />
         </a>
 
-        <nav aria-label="Navegación principal" className="hidden items-center text-sm font-bold lg:flex lg:gap-2 xl:gap-6">
-          {navigation.map((item) => (
-            <a key={item.label} href={item.href} className="rounded-md bg-blue-600 px-5 py-2.5 text-center text-white shadow-sm transition-all hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 xl:px-7">
-              {item.label}
-            </a>
-          ))}
+        <nav aria-label="Navegación principal" className="hidden h-full items-center gap-7 text-xs font-medium md:flex lg:gap-10">
+          {navigation.map((item) => {
+            const isActive = activeSection === item.id
+
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                aria-current={isActive ? 'page' : undefined}
+                data-active={isActive}
+                className="site-nav-link flex h-full items-center px-1"
+                onClick={() => setActiveSection(item.id)}
+              >
+                {item.label}
+              </a>
+            )
+          })}
         </nav>
 
-        <Link to="/auth/login" className="block shrink-0 rounded-md bg-blue-600 px-4 py-2.5 text-center text-sm font-bold text-white shadow-sm transition-all hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 sm:px-7">
-          Iniciar Sesión
+        <Link to="/auth/login" className="login-outline justify-self-end" aria-label="Iniciar sesión">
+          <span className="relative z-10 flex items-center gap-2 px-4 py-1.5 text-[11px] font-medium text-slate-100 sm:px-5">
+            <User size={15} strokeWidth={1.7} aria-hidden="true" />
+            Iniciar sesión
+          </span>
         </Link>
       </div>
     </header>

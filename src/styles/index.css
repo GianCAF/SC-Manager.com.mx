@@ -10,7 +10,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 58px;
+  scroll-padding-top: 48px;
 }
 
 body {
@@ -28,6 +28,82 @@ textarea {
 
 img {
   max-width: 100%;
+}
+
+.site-header {
+  border-bottom: 1px solid rgb(40 75 120 / 38%);
+  background:
+    radial-gradient(circle at 50% 120%, rgb(15 75 155 / 22%), transparent 38%),
+    linear-gradient(90deg, #020d22 0%, #03132d 52%, #020d22 100%);
+  box-shadow: 0 5px 18px rgb(0 7 20 / 22%);
+}
+
+.site-nav-link {
+  position: relative;
+  color: #d6e0ec;
+  text-decoration: none;
+  transition: color 220ms ease, text-shadow 220ms ease;
+}
+
+.site-nav-link::after {
+  position: absolute;
+  right: 50%;
+  bottom: 4px;
+  left: 50%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, #1f66ff 18%, #66b8ff 50%, #1f66ff 82%, transparent 100%);
+  box-shadow: 0 0 6px rgb(52 128 255 / 95%), 0 0 15px rgb(19 94 255 / 85%);
+  content: "";
+  opacity: 0;
+  transition: right 300ms ease, left 300ms ease, opacity 180ms ease;
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible,
+.site-nav-link[data-active="true"] {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgb(127 184 255 / 35%);
+}
+
+.site-nav-link[data-active="true"]::after {
+  right: -12px;
+  left: -12px;
+  opacity: 1;
+}
+
+.site-nav-link:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid #4d9cff;
+  outline-offset: 3px;
+}
+
+.login-outline {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 9px, 100% calc(100% - 9px), calc(100% - 9px) 100%, 9px 100%, 0 calc(100% - 9px), 0 9px);
+  background: linear-gradient(115deg, #8ac8ff, #2c73bd 42%, #76baff);
+  transition: filter 220ms ease, transform 220ms ease;
+}
+
+.login-outline::after {
+  position: absolute;
+  z-index: 0;
+  inset: 1px;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  background: #03132d;
+  content: "";
+}
+
+.login-outline:hover {
+  filter: brightness(1.25) drop-shadow(0 0 8px rgb(56 142 255 / 45%));
+  transform: translateY(-1px);
+}
+
+.login-outline:focus-visible {
+  outline: 2px solid #70b8ff;
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
