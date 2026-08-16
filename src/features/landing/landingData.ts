@@ -82,9 +82,34 @@ export const services: Service[] = [
 ]
 
 export const clientLogos = [
-  { src: '/imagenes/consultores.jpeg', alt: 'Consultores', className: 'h-23' },
-  { src: '/imagenes/frmedical.png', alt: 'FR Medical', className: 'h-20' },
-  { src: '/imagenes/laboratorio.png', alt: 'Laboratorio', className: 'h-24' },
-  { src: '/imagenes/lockton.png', alt: 'Lockton', className: 'h-24' },
-  { src: '/imagenes/amarox.jpeg', alt: 'Amarox', className: 'h-25' },
+  {
+    src: 'https://cdn.prod.website-files.com/62cf6adbbf4cb16a99544569/62e41afb21fbc26c6bf5dc44_logo_schulzconsultores.png',
+    alt: 'Schulz Consultores',
+    href: 'https://schulzconsultores.mx/',
+    className: 'h-18 sm:h-20 mix-blend-multiply',
+  },
+  {
+    src: 'https://frmedical.com.mx/wp-content/uploads/2024/04/PNG.png',
+    alt: 'FR Medical',
+    href: 'https://frmedical.com.mx/',
+    className: 'h-16 sm:h-18',
+  },
+  {
+    src: 'https://www.plmconnection.com/plmservices/PharmaSearchEngine/Mexico/DEF/Logos/400x400/Armstrong.png',
+    alt: 'Laboratorios Armstrong',
+    href: 'https://www.laboratoriosarmstrong.mx/',
+    className: 'h-24 scale-150 sm:h-28 sm:scale-[1.65]',
+  },
+  {
+    src: 'https://www.xsbrokers.com/wp-content/uploads/2023/05/Lockton_Companies_logo.png',
+    alt: 'Lockton',
+    href: 'https://global.lockton.com/',
+    className: 'h-20 sm:h-24',
+  },
+  {
+    src: 'https://www.amaroxpharma.de/images/logo.png',
+    alt: 'Amarox',
+    href: 'https://www.amaroxpharma.de/',
+    className: 'h-14 sm:h-16',
+  },
 ]
