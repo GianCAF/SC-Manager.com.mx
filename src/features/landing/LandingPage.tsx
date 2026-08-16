@@ -1,9 +1,9 @@
 import { CompaniesSection } from './CompaniesSection'
-import { ContactSection } from './ContactSection'
 import { Footer } from './Footer'
 import { Header } from './Header'
 import { Hero } from './Hero'
 import { IdentitySection } from './IdentitySection'
+import { LocationSection } from './LocationSection'
 import { ServicesSection } from './ServicesSection'
 
 export function LandingPage() {
@@ -15,7 +15,7 @@ export function LandingPage() {
         <IdentitySection />
         <ServicesSection />
         <CompaniesSection />
-        <ContactSection />
+        <LocationSection />
       </main>
       <Footer />
     </div>
