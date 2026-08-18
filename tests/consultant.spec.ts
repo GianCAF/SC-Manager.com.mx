@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test'
+import { authenticateAsConsultant } from './authMock'
 
 test.beforeEach(async ({ page }) => {
+  await authenticateAsConsultant(page)
   await page.goto('/consultor')
-  await page.evaluate(() => localStorage.clear())
-  await page.reload()
 })
 
 test('organiza los formularios y conserva el expediente activo en la caché', async ({ page }) => {
@@ -12,7 +12,12 @@ test('organiza los formularios y conserva el expediente activo en la caché', as
 
   await page.getByRole('button', { name: /Datos personales/ }).click()
   await page.getByLabel('Nombre del candidato').fill('Candidato de prueba')
-  await page.getByLabel('Fecha de nacimiento', { exact: true }).fill('2000-01-01')
+  await page.getByLabel(/^Fecha de nacimiento/).fill('2000-01-01')
+  await page.getByLabel('Lugar de nacimiento').fill('Pachuca, Hidalgo')
+  await page.getByLabel('Correo electrónico').fill('candidato@example.com')
+  await page.getByLabel('Nacionalidad').fill('Mexicana')
+  await page.getByLabel('Estado civil').selectOption('Soltero(a)')
+  await page.getByLabel('CURP').fill('HECA000101HHGRRN01')
   await expect(page.getByRole('spinbutton', { name: /Edad/ })).toHaveValue('26')
   await page.getByRole('button', { name: 'Guardar formulario' }).click()
 
@@ -63,4 +68,29 @@ test('inicia los registros repetibles con uno y permite agregar más', async ({ 
   await page.getByRole('button', { name: /Visitas/ }).click()
   await expect(page.getByText('Visita 1', { exact: true })).toBeVisible()
   await expect(page.getByLabel('URLs de fotografías 1')).toHaveAttribute('placeholder', 'https://imagedelivery.net/...')
+})
+
+test('impide guardar formularios con campos obligatorios vacíos', async ({ page }) => {
+  await page.getByRole('button', { name: /Datos personales/ }).click()
+  await expect(page.getByLabel('Nombre del candidato')).toHaveAttribute('required', '')
+  await expect(page.getByLabel(/^Fecha de nacimiento/)).toHaveAttribute('required', '')
+  await expect(page.getByLabel('Lugar de nacimiento')).toHaveAttribute('required', '')
+  await expect(page.getByLabel('Correo electrónico')).toHaveAttribute('required', '')
+  await expect(page.getByLabel('CURP')).toHaveAttribute('required', '')
+  await expect(page.getByLabel('Nacionalidad')).toHaveAttribute('required', '')
+  await expect(page.getByLabel('Estado civil')).toHaveAttribute('required', '')
+
+  await page.getByRole('button', { name: 'Guardar formulario' }).click()
+  await expect(page.getByLabel('Nombre del candidato')).toBeFocused()
+
+  await page.getByRole('button', { name: /Domicilio/ }).click()
+  for (const label of ['Calle y número', 'Colonia', 'Código postal', 'Delegación o municipio', 'Estado', 'Teléfono móvil']) {
+    await expect(page.getByLabel(label).first()).toHaveAttribute('required', '')
+  }
+
+  await page.getByRole('button', { name: /Resultado general/ }).click()
+  await expect(page.getByLabel('Resultado')).toHaveAttribute('required', '')
+
+  await page.getByRole('button', { name: /Ingresos/ }).click()
+  await expect(page.getByLabel('Ingreso bruto mensual')).toHaveAttribute('required', '')
 })
