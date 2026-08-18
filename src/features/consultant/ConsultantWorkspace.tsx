@@ -30,6 +30,7 @@ import {
   type FieldDefinition,
   type RepeaterDefinition,
 } from './consultantFormConfig'
+import { useAuth } from '../auth/AuthContext'
 
 type SectionValues = Record<string, unknown>
 type DraftData = Record<string, SectionValues>
@@ -102,6 +103,7 @@ function formatCurrency(value: number): string {
 }
 
 export function ConsultantWorkspace() {
+  const { profile, signOut } = useAuth()
   const [draft, setDraft] = useState<StoredDraft>(loadDraft)
   const [activeSectionId, setActiveSectionId] = useState(consultantSections[0].id)
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -253,10 +255,10 @@ export function ConsultantWorkspace() {
             </div>
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#071a38] text-white"><CircleUserRound size={19} /></div>
             <div className="hidden leading-tight sm:block">
-              <p className="text-xs font-bold text-slate-800">Consultor de prueba</p>
-              <p className="text-[11px] text-slate-500">Sesión de diseño</p>
+              <p className="text-xs font-bold text-slate-800">{profile?.full_name}</p>
+              <p className="text-[11px] text-slate-500">{profile?.role === 'admin' ? 'Administrador' : 'Consultor'}</p>
             </div>
-            <Link to="/auth/login" className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800" aria-label="Salir del panel"><LogOut size={18} /></Link>
+            <button type="button" onClick={() => void signOut()} className="rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800" aria-label="Cerrar sesión"><LogOut size={18} /></button>
           </div>
         </div>
       </header>
@@ -485,16 +487,18 @@ function Field({ field, value, onChange, children }: { field: FieldDefinition; v
 
   return (
     <label className={`block ${spanClass}`}>
-      <span className="mb-1.5 block text-xs font-bold text-slate-600">{field.label}</span>
+      <span className="mb-1.5 block text-xs font-bold text-slate-600">
+        {field.label}{field.required && <span className="text-rose-500" aria-hidden="true"> *</span>}
+      </span>
       {field.type === 'textarea' ? (
-        <textarea rows={4} value={stringValue} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} readOnly={field.readOnly} className={`${inputClassName} resize-y`} />
+        <textarea rows={4} value={stringValue} onChange={(event) => onChange(event.target.value)} placeholder={field.placeholder} readOnly={field.readOnly} required={field.required} className={`${inputClassName} resize-y`} />
       ) : field.type === 'select' ? (
-        <select value={stringValue} onChange={(event) => onChange(event.target.value)} className={inputClassName}>
+        <select value={stringValue} onChange={(event) => onChange(event.target.value)} required={field.required} className={inputClassName}>
           <option value="">Selecciona una opción</option>
           {field.options?.map((option) => <option key={option} value={option}>{option}</option>)}
         </select>
       ) : (
-        <input type={field.type ?? 'text'} value={stringValue} onChange={(event) => onChange(field.type === 'number' ? event.target.valueAsNumber || '' : event.target.value)} placeholder={field.placeholder} min={field.min} max={field.max} step={field.step} readOnly={field.readOnly} className={inputClassName} />
+        <input type={field.type ?? 'text'} value={stringValue} onChange={(event) => onChange(field.type === 'number' ? (Number.isNaN(event.target.valueAsNumber) ? '' : event.target.valueAsNumber) : event.target.value)} placeholder={field.placeholder} min={field.min} max={field.max} step={field.step} readOnly={field.readOnly} required={field.required} className={inputClassName} />
       )}
       {field.help && <span className="mt-1.5 block text-[11px] leading-4 text-slate-400">{field.help}</span>}
       {children}

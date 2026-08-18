@@ -11,6 +11,7 @@ export type FieldDefinition = {
   max?: number
   step?: number
   readOnly?: boolean
+  required?: boolean
   help?: string
 }
 
@@ -73,7 +74,7 @@ export const expenseFields: FieldDefinition[] = [
 ]
 
 export const incomeFields: FieldDefinition[] = [
-  { name: 'gross_salary', label: 'Ingreso bruto mensual', type: 'number', min: 0 },
+  { name: 'gross_salary', label: 'Ingreso bruto mensual', type: 'number', min: 0, required: true },
   { name: 'commissions_vouchers', label: 'Comisiones y vales de despensa', type: 'number', min: 0 },
   { name: 'retirement_pension', label: 'Pensión por jubilación', type: 'number', min: 0 },
   { name: 'other_income', label: 'Otros ingresos', type: 'number', min: 0 },
@@ -121,18 +122,18 @@ export const consultantSections: ConsultantSection[] = [
     shortTitle: 'Datos personales',
     description: 'Identificación general del candidato. La edad se calcula automáticamente.',
     groups: [{ fields: [
-      { name: 'candidate_name', label: 'Nombre del candidato', span: 2 },
+      { name: 'candidate_name', label: 'Nombre del candidato', span: 2, required: true },
       { name: 'rfc', label: 'RFC y homoclave' },
-      { name: 'birth_date', label: 'Fecha de nacimiento', type: 'date' },
-      { name: 'birth_place', label: 'Lugar de nacimiento' },
+      { name: 'birth_date', label: 'Fecha de nacimiento', type: 'date', required: true },
+      { name: 'birth_place', label: 'Lugar de nacimiento', required: true },
       { name: 'marital_regime', label: 'Régimen conyugal', type: 'select', options: ['No aplica', 'Sociedad conyugal', 'Separación de bienes', 'Otro'] },
       { name: 'imss_number', label: 'Número de afiliación al IMSS' },
-      { name: 'email', label: 'Correo electrónico', type: 'email' },
+      { name: 'email', label: 'Correo electrónico', type: 'email', required: true },
       { name: 'age', label: 'Edad', type: 'number', readOnly: true, help: 'Se completa desde la fecha de nacimiento.' },
-      { name: 'nationality', label: 'Nacionalidad' },
-      { name: 'civil_status', label: 'Estado civil', type: 'select', options: civilStatus },
+      { name: 'nationality', label: 'Nacionalidad', required: true },
+      { name: 'civil_status', label: 'Estado civil', type: 'select', options: civilStatus, required: true },
       { name: 'education_level', label: 'Grado de estudios' },
-      { name: 'curp', label: 'CURP', span: 2 },
+      { name: 'curp', label: 'CURP', span: 2, required: true },
     ] }],
   },
   {
@@ -142,16 +143,16 @@ export const consultantSections: ConsultantSection[] = [
     description: 'El código postal busca colonia, municipio y estado; todos los campos permanecen editables.',
     special: 'postalAddress',
     groups: [{ fields: [
-      { name: 'street_number', label: 'Calle y número', span: 2 },
-      { name: 'neighborhood', label: 'Colonia' },
+      { name: 'street_number', label: 'Calle y número', span: 2, required: true },
+      { name: 'neighborhood', label: 'Colonia', required: true },
       { name: 'cross_streets', label: 'Entre calles' },
-      { name: 'postal_code', label: 'Código postal', placeholder: '5 dígitos' },
-      { name: 'municipality', label: 'Delegación o municipio' },
-      { name: 'state', label: 'Estado' },
+      { name: 'postal_code', label: 'Código postal', placeholder: '5 dígitos', required: true },
+      { name: 'municipality', label: 'Delegación o municipio', required: true },
+      { name: 'state', label: 'Estado', required: true },
       { name: 'time_at_address', label: 'Tiempo de radicar en el domicilio' },
       { name: 'time_in_city', label: 'Tiempo de radicar en la ciudad' },
       { name: 'home_phone', label: 'Teléfono particular', type: 'tel' },
-      { name: 'mobile_phone', label: 'Teléfono móvil', type: 'tel' },
+      { name: 'mobile_phone', label: 'Teléfono móvil', type: 'tel', required: true },
       { name: 'emergency_phone', label: 'Teléfono de emergencia', type: 'tel' },
     ] }],
   },
@@ -192,7 +193,7 @@ export const consultantSections: ConsultantSection[] = [
     shortTitle: 'Resultado general',
     description: 'Conclusión integral del estudio y clasificación operativa.',
     groups: [{ fields: [
-      { name: 'result_status', label: 'Resultado', type: 'select', options: ['Pendiente', 'Recomendable', 'Recomendable con reservas', 'No recomendable', 'Requiere validación'] },
+      { name: 'result_status', label: 'Resultado', type: 'select', options: ['Pendiente', 'Recomendable', 'Recomendable con reservas', 'No recomendable', 'Requiere validación'], required: true },
       { name: 'risk_level', label: 'Nivel de riesgo', type: 'select', options: ['Sin evaluar', 'Bajo', 'Medio', 'Alto'] },
       { name: 'summary', label: 'Conclusión y observaciones generales', type: 'textarea', span: 2 },
     ] }],
