@@ -37,7 +37,7 @@ export function LoginPage() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.3),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(14,165,233,0.18),transparent_30%)]" />
       <section className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/15 bg-white shadow-2xl shadow-slate-950/40">
         <div className="bg-gradient-to-r from-[#071a38] to-[#164b9d] px-8 py-7 text-white">
-          <img src="/imagenes/logo1.png" alt="Logo SC Manager" className="mb-6 h-14 w-auto rounded-full bg-white/95 p-1 shadow-lg" />
+          <img src="/imagenes/Logo4.png" alt="Logo SC Manager" className="mb-6 h-14 w-auto rounded-full shadow-lg" />
           <p className="text-xs font-bold tracking-[0.22em] text-blue-200 uppercase">Portal seguro</p>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight">Acceso al sistema</h1>
           <p className="mt-2 text-sm leading-relaxed text-blue-100">Ingresa con la cuenta asignada por SC Manager.</p>

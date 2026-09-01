@@ -45,7 +45,7 @@ export function Hero() {
           Soluciones profesionales en estudios socioeconómicos, investigaciones laborales y validación de información para empresas.
         </p>
         <div className="flex justify-center pt-4">
-          <Link to="/auth/login" className="group inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-blue-500/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+          <Link to="/auth/login" className="group inline-flex items-center justify-center gap-3 rounded-full bg-blue-600 px-9 py-3.5 text-lg font-bold text-white shadow-lg transition-all duration-200 hover:bg-blue-700 hover:shadow-blue-500/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
             <span>Acceder al Sistema</span>
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
           </Link>
