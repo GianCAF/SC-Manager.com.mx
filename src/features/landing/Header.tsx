@@ -54,10 +54,10 @@ export function Header() {
     <header className="site-header sticky top-0 z-50 h-12 px-4 md:px-8">
       <div className="mx-auto grid h-full max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4">
         <a href="#inicio" aria-label="Ir al inicio" className="flex w-fit items-center" onClick={() => setActiveSection('inicio')}>
-          <img src="/imagenes/logo1.png" alt="Logo SocioManager" className="h-8 w-auto object-contain" />
+          <img src="/imagenes/Logo4.png" alt="Logo SocioManager" className="h-11.5 w-auto object-contain" />
         </a>
 
-        <nav aria-label="Navegación principal" className="hidden h-full items-center gap-7 text-xs font-medium md:flex lg:gap-10">
+        <nav aria-label="Navegación principal" className="hidden h-full items-center gap-7 text-sm font-medium md:flex lg:gap-10">
           {navigation.map((item) => {
             const isActive = activeSection === item.id
 
@@ -77,7 +77,7 @@ export function Header() {
         </nav>
 
         <Link to="/auth/login" className="login-outline justify-self-end" aria-label="Iniciar sesión">
-          <span className="relative z-10 flex items-center gap-2 px-4 py-1.5 text-[11px] font-medium text-slate-100 sm:px-5">
+          <span className="relative z-10 flex items-center gap-2 px-4 py-1.5 text-[13px] font-medium text-slate-100 sm:px-5">
             <User size={15} strokeWidth={1.7} aria-hidden="true" />
             Iniciar sesión
           </span>
