@@ -160,7 +160,7 @@ export const consultantSections: ConsultantSection[] = [
     id: 'documents',
     title: 'Documentación oficial presentada',
     shortTitle: 'Documentación',
-    description: 'Marca lo recibido y registra la URL del archivo que posteriormente se almacenará en Cloudflare.',
+    description: 'Marca los documentos recibidos y registra el enlace de la carpeta compartida en Google Drive.',
     special: 'documents',
   },
   {
@@ -376,6 +376,7 @@ export const consultantSections: ConsultantSection[] = [
       { name: 'phones', label: 'Teléfono(s)', type: 'tel' },
       { name: 'start_date', label: 'Fecha de ingreso', type: 'date' },
       { name: 'end_date', label: 'Fecha de salida', type: 'date' },
+      { name: 'current_job', label: 'Trabajo aquí actualmente', type: 'checkbox' },
       { name: 'initial_position', label: 'Puesto inicial' },
       { name: 'final_position', label: 'Puesto final' },
       { name: 'initial_salary', label: 'Sueldo inicial', type: 'number', min: 0 },
