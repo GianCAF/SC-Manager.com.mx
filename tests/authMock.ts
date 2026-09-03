@@ -53,7 +53,7 @@ export async function authenticateAsConsultant(page: Page) {
   await page.addInitScript(({ storageKey, session }) => {
     window.localStorage.setItem(storageKey, JSON.stringify(session))
   }, {
-    storageKey: 'sb-cahtyoxlvnqevhxftpr-auth-token',
+    storageKey: 'sb-cahhtyoxlvnqevhxftpr-auth-token',
     session: createSession(),
   })
 }
